@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Screen_register">
+    <TextView
+        android:id="@+id/tv_dp"
+        android:text="Đăng Ký"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="10dp"
+       android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/register_edtenDangKy"
+        android:background="@drawable/custome_listview"
+        android:layout_below="@+id/tv_dp"
+        android:hint="Điền Tên Đăng Ký"
+        android:paddingLeft="10dp"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+    <EditText
+        android:id="@+id/register_edMatKhauDangKy"
+        android:background="@drawable/custome_listview"
+        android:layout_below="@+id/register_edtenDangKy"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:inputType="textPassword"
+        android:hint="Điền Mật Khẩu Đăng Ký"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <EditText
+        android:id="@+id/register_edNhapLaimk"
+        android:background="@drawable/custome_listview"
+        android:layout_below="@+id/register_edMatKhauDangKy"
+        android:layout_margin="10dp"
+        android:paddingLeft="10dp"
+        android:inputType="textPassword"
+        android:hint="Điền Mật Khẩu Đăng Ký"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <Button
+        android:id="@+id/register_btnDangKy"
+        android:layout_below="@+id/register_edNhapLaimk"
+        android:text="Đăng Ký"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"/>
+    <Button
+        android:id="@+id/register_btnThoatDangKy"
+        android:layout_below="@+id/register_edNhapLaimk"
+        android:text="Thoát"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/register_btnDangKy"
+        android:layout_marginLeft="50dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"/>
+
+</RelativeLayout>

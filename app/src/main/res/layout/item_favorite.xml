@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemfav"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/custome_listview"
+    tools:ignore="MissingClass">
+
+    <TextView
+        android:id="@+id/itemfav_tenfav"
+        android:layout_marginLeft="10dp"
+        android:text="Muon Roi Ma Sao Con"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:paddingTop="15dp"
+        android:layout_width="330dp"
+        android:layout_height="40dp"/>
+    <ImageButton
+        android:id="@+id/itemfav_xoafav"
+        android:layout_toEndOf="@+id/itemfav_tenfav"
+        android:src="@drawable/baseline_delete_24"
+        android:layout_width="40dp"
+        android:layout_height="60dp"/>
+
+</RelativeLayout>

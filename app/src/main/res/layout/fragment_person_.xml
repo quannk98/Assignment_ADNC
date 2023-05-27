@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Person_Fragment">
+    <ImageView
+        android:id="@+id/a2"
+        android:src="@drawable/avatar"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"/>
+    <TextView
+        android:id="@+id/person_tendp"
+        android:layout_toEndOf="@+id/a2"
+        android:text="Nguyễn Khắc Quân"
+        android:layout_marginTop="30dp"
+        android:textSize="25dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/a3"
+        android:layout_toEndOf="@+id/a2"
+        android:text="Số Lượng Bài Hát:"
+        android:layout_marginTop="60dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/person_soluongbaihat"
+        android:layout_toEndOf="@+id/a3"
+        android:layout_marginTop="60dp"
+        android:text="3"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/a4"
+        android:layout_toEndOf="@+id/a2"
+        android:text="Số Lượng Bài Báo:"
+        android:layout_marginTop="90dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/person_soluongbaibap"
+        android:layout_below="@+id/person_soluongbaihat"
+        android:layout_toEndOf="@+id/a4"
+        android:layout_marginTop="3dp"
+        android:text="3"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@id/a5"
+        android:layout_below="@+id/a2"
+        android:text="Danh Sách Bài Hát Yêu Thích"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/person_recycler_yeuthichnhac"
+        android:layout_below="@+id/a5"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="290dp"/>
+    <Button
+        android:id="@+id/person_btndangxuat"
+        android:layout_below="@+id/person_recycler_yeuthichnhac"
+        android:layout_marginTop="10dp"
+        android:text="Đăng Xuất"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+
+
+</RelativeLayout>

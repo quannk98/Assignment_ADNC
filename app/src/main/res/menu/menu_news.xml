@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/opnews_showdata"
+        android:iconTint="@color/black"
+        android:title="Chi Tiết Bài Báo" />
+    <item
+        android:id="@+id/opnews_edit"
+        android:iconTint="@color/black"
+        android:title="Sửa" />
+    <item
+        android:id="@+id/opnews_delete"
+        android:iconTint="@color/black"
+        android:title="Xoá" />
+</menu>

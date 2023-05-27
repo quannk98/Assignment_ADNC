@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="10dp"
+    android:background="@drawable/custome_listview"
+    android:id="@+id/itemsong"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+     <TextView
+         android:id="@+id/itemsong_tenbaihat"
+         android:text="Tên Bài Hát"
+         android:textSize="20dp"
+         android:textStyle="bold"
+         android:paddingTop="10dp"
+         android:paddingLeft="10dp"
+         android:layout_width="350dp"
+         android:layout_height="50dp"/>
+     <ImageView
+         android:id="@+id/itemsong_yeuthich"
+         android:layout_toEndOf="@+id/itemsong_tenbaihat"
+         android:src="@drawable/baseline_skip_next_24"
+         android:layout_marginTop="10dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"/>
+</RelativeLayout>

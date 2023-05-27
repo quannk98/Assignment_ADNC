@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.Music_Fragment">
+<TextView
+    android:id="@+id/music_edtensong"
+    android:hint="Bài Hát Đang Phát"
+    android:textSize="25dp"
+    android:paddingTop="5dp"
+    android:textStyle="bold"
+    android:paddingLeft="10dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/custome_listview"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/a1"
+        android:layout_below="@+id/music_edtensong"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@android:color/holo_red_light"
+        android:text="Danh Sách Bài Hát"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/music_recycler"
+    android:layout_below="@+id/a1"
+    android:layout_width="match_parent"
+    android:layout_height="380dp"/>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/music_recycler"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:background="@android:color/holo_blue_light"
+        android:layout_height="80dp">
+
+        <ImageButton
+            android:id="@+id/music_imbtnpre"
+            android:src="@drawable/baseline_skip_previous_24"
+            android:layout_marginTop="13dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+        <ImageButton
+            android:id="@+id/music_imbtnpause"
+            android:layout_toEndOf="@+id/music_imbtnpre"
+            android:src="@drawable/baseline_pause_circle_24"
+            android:layout_marginTop="13dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+        <ImageButton
+            android:id="@+id/music_imbtnnext"
+            android:layout_toEndOf="@+id/music_imbtnpause"
+            android:src="@drawable/baseline_skip_next_24"
+            android:layout_marginTop="13dp"
+            android:layout_width="80dp"
+            android:layout_height="50dp"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/music_btnfloatingthembaihat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/music_imbtnnext"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="20dp"
+
+            android:src="@drawable/baseline_add_circle_24"
+            app:backgroundTint="@android:color/holo_green_light" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

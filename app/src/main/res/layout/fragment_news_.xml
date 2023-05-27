@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.News_Fragment">
+    <TextView
+        android:id="@+id/a1"
+        android:text="Danh Sách Các Bài Báo Hay"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:textSize="25dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/news_recycler"
+        android:layout_below="@+id/a1"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/news_btnfloatingthembao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/news_recycler"
+        android:src="@drawable/baseline_add_circle_24"
+        app:backgroundTint="@android:color/holo_green_light" />
+
+
+
+</RelativeLayout>
