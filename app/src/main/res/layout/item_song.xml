@@ -17,7 +17,7 @@
      <ImageView
          android:id="@+id/itemsong_yeuthich"
          android:layout_toEndOf="@+id/itemsong_tenbaihat"
-         android:src="@drawable/baseline_skip_next_24"
+         android:src="@drawable/baseline_favorite_24"
          android:layout_marginTop="10dp"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"/>

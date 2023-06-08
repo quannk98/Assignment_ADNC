@@ -43,6 +43,7 @@ public class ThanhVienDAO {
         return sqLiteDatabase.insert("thanhvien", null, contentValues);
     }
     public boolean checkLogin(String tentv,String mk){
+
            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM thanhvien WHERE tentv = ? AND matkhau = ? ",
                    new String[]{tentv,mk});

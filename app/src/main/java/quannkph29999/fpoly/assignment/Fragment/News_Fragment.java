@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,28 +18,26 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 
 import quannkph29999.fpoly.assignment.Adapter.AdapterNews;
+import quannkph29999.fpoly.assignment.Adapter.ViewPager2Adapter;
 import quannkph29999.fpoly.assignment.DAO.NewsDAO;
 import quannkph29999.fpoly.assignment.Model.Music;
 import quannkph29999.fpoly.assignment.Model.News;
 import quannkph29999.fpoly.assignment.R;
+import quannkph29999.fpoly.assignment.ScreenNews.NewsViewPager2Adapter;
 
 
 public class News_Fragment extends Fragment {
-        NewsDAO newsDAO;
-        AdapterNews adapterNews;
-        ArrayList<News> listnews;
-        RecyclerView recyclerView;
-        FloatingActionButton floatingbao;
-
+    NewsViewPager2Adapter newsViewPager2Adapter;
 
     public News_Fragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -51,78 +50,41 @@ public class News_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news_, container, false);
-        recyclerView = view.findViewById(R.id.news_recycler);
-        floatingbao = view.findViewById(R.id.news_btnfloatingthembao);
-        reloadata();
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        reloadata();
-    }
-    public void reloadata(){
-        newsDAO = new NewsDAO(getContext());
-        listnews = newsDAO.getDataNews();
-        adapterNews = new AdapterNews(listnews,getContext(),newsDAO);
-        recyclerView.setAdapter(adapterNews);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        floatingbao.setOnClickListener(new View.OnClickListener() {
+        TabLayout tabLayout = view.findViewById(R.id.news_tablayout);
+        ViewPager2 viewPager2 = view.findViewById(R.id.news_viewpager);
+        newsViewPager2Adapter = new NewsViewPager2Adapter(News_Fragment.this);
+        viewPager2.setAdapter(newsViewPager2Adapter);
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onClick(View v) {
-                ThemBao();
-            }
-        });
-    }
-
-    public void ThemBao(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_them_bao, null, false);
-        EditText themtenbao = view.findViewById(R.id.dialognews_themtenbaibao);
-        EditText themlinkbao = view.findViewById(R.id.dialognews_themlinkbao);
-        EditText themlinkanh = view.findViewById(R.id.dialognews_themlinkanh);
-        Button thembao = view.findViewById(R.id.dialognews_btnthem);
-        builder.setView(view);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        thembao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String addten = themtenbao.getText().toString();
-                String addlinkbao = themlinkbao.getText().toString();
-                String addlinkanh = themlinkanh.getText().toString();
-                News themnews = new News(addten,addlinkbao,addlinkanh);
-                if (themtenbao.length() == 0) {
-                    themtenbao.requestFocus();
-                    themtenbao.setError("Không để trống phần tên");
-                }
-                else if (themlinkbao.length() == 0) {
-                    themlinkbao.requestFocus();
-                    themlinkbao.setError("Không để trống phần link báo");
-                }
-                else if (themlinkanh.length() == 0) {
-                    themlinkanh.requestFocus();
-                    themlinkanh.setError("Không để trống phần link ảnh");
-                }
-
-                else {
-                      newsDAO = new NewsDAO(getContext());
-                    if (newsDAO.ThemNews(themnews) > 0) {
-                        reloadata();
-                        Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();
-                        alertDialog.dismiss();
-                    } else {
-                        Toast.makeText(getContext(), "Thêm Thất Bại", Toast.LENGTH_SHORT).show();
-                    }
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("Thời Sự");
+                        break;
+                    case 1:
+                        tab.setText("Bóng Đá");
+                        break;
+                    case 2:
+                        tab.setText("Du Lịch");
+                        break;
                 }
             }
-        });
+        }).attach();
+
     }
+
+
 }

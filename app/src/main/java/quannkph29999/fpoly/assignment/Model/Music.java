@@ -1,6 +1,8 @@
 package quannkph29999.fpoly.assignment.Model;
 
-public class Music {
+import java.io.Serializable;
+
+public class Music implements Serializable {
     private int idnhac;
     private String tennhac;
     private String linknhac;

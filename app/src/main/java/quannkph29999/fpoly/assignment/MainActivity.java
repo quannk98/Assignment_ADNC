@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import quannkph29999.fpoly.assignment.Adapter.ViewPager2Adapter;
+import quannkph29999.fpoly.assignment.Fragment.Music_Fragment;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_music:
+
                         viewPager2.setCurrentItem(0);
                         break;
                     case R.id.action_newspaper:
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                    switch (position){
                        case 0:
                            setTitle("QUÂN-MP3");
+
                            bottomNavi.getMenu().findItem(R.id.action_music).setChecked(true);
                            break;
                        case 1:

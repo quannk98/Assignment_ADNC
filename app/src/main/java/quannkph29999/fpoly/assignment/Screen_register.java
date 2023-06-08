@@ -2,20 +2,44 @@ package quannkph29999.fpoly.assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import quannkph29999.fpoly.assignment.DAO.ThanhVienDAO;
-import quannkph29999.fpoly.assignment.Model.ThanhVien;
+import quannkph29999.fpoly.assignment.Service.Service_Login_Register;
 
 public class Screen_register extends AppCompatActivity {
     EditText ed_TenDangKy,ed_MkDangKy,ed_NlMkDangKy;
     Button btn_DangKy,btn_ThoatDangKy;
     ThanhVienDAO thanhVienDAO;
+    Service_Login_Register service_loginRegister;
+    boolean checkconnected;
+    ServiceConnection sv_register = new ServiceConnection() {
+
+        @Override
+
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            Service_Login_Register.MyBinder myBinder = (Service_Login_Register.MyBinder) iBinder;
+            service_loginRegister = myBinder.getService_login();
+            checkconnected = true;
+        }
+
+        @Override
+
+        public void onServiceDisconnected(ComponentName componentName) {
+            checkconnected = false;
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +50,8 @@ public class Screen_register extends AppCompatActivity {
         ed_NlMkDangKy = findViewById(R.id.register_edNhapLaimk);
         btn_DangKy = findViewById(R.id.register_btnDangKy);
         btn_ThoatDangKy = findViewById(R.id.register_btnThoatDangKy);
+        thanhVienDAO = new ThanhVienDAO(getApplicationContext());
+        service_loginRegister = new Service_Login_Register();
     }
 
     @Override
@@ -36,6 +62,8 @@ public class Screen_register extends AppCompatActivity {
             public void onClick(View v) {
                 String tendangky = ed_TenDangKy.getText().toString();
                 String matkhaudk = ed_MkDangKy.getText().toString();
+                Intent intentdangky = new Intent(Screen_register.this, Service_Login_Register.class);
+                bindService(intentdangky,sv_register, Context.BIND_AUTO_CREATE);
                 if(ed_TenDangKy.length() == 0){
                     ed_TenDangKy.requestFocus();
                     ed_TenDangKy.setError("Không để trống tên đăng ký");
@@ -53,16 +81,14 @@ public class Screen_register extends AppCompatActivity {
                     ed_NlMkDangKy.setError("Mật khẩu không khớp với nhau");
                 }
                 else {
-                    thanhVienDAO = new ThanhVienDAO(getApplicationContext());
-                    ThanhVien themthanhVien = new ThanhVien(tendangky,matkhaudk);
-                      if(thanhVienDAO.ThemThanhVien(themthanhVien) > 0){
-                          Toast.makeText(Screen_register.this, "Đăng Ký Thành Công", Toast.LENGTH_SHORT).show();
-                      }
-                      else {
-                          Toast.makeText(Screen_register.this, "Đăng Ký Thất Bại", Toast.LENGTH_SHORT).show();
-                      }
-
+                    if(service_loginRegister.DangKy(thanhVienDAO,tendangky,matkhaudk) ==true){
+                        Toast.makeText(Screen_register.this, "Đăng Ký Thành Công", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(Screen_register.this, "Đăng Ký Thất Bại", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
         btn_ThoatDangKy.setOnClickListener(new View.OnClickListener() {

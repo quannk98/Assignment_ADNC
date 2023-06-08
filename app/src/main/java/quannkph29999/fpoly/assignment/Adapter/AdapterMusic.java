@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,29 +29,37 @@ import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import quannkph29999.fpoly.assignment.DAO.FavDAO;
 import quannkph29999.fpoly.assignment.DAO.MusicDAO;
+import quannkph29999.fpoly.assignment.Fragment.Music_Fragment;
+import quannkph29999.fpoly.assignment.MainActivity;
 import quannkph29999.fpoly.assignment.Model.FavoriteMusic;
 import quannkph29999.fpoly.assignment.Model.Music;
 import quannkph29999.fpoly.assignment.R;
+import quannkph29999.fpoly.assignment.Service.Service_Music;
 
 public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> {
     ArrayList<Music> listmusic;
-    ArrayList<FavoriteMusic> listfav;
     Context context;
     MusicDAO musicDAO;
     FavoriteMusic favoriteMusic;
     TextView title;
     FavDAO favDAO;
     boolean check = false;
+    Music music;
+    boolean trangthai = true;
+
+
 
     public AdapterMusic(ArrayList<Music> listmusic, Context context, MusicDAO musicDAO, TextView title) {
         this.listmusic = listmusic;
         this.context = context;
         this.musicDAO = musicDAO;
         this.title = title;
+
     }
 
 
@@ -90,6 +101,7 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
                             holder.yeuthich.setImageResource(R.drawable.baseline_favorite_red_24);
                             Toast.makeText(context, "Đã Thêm Vào Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
                             check = true;
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -108,8 +120,18 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
         holder.itemsong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                music = new Music();
                 String chuyenten = listmusic.get(position).getTennhac();
                 title.setText(chuyenten);
+                Intent chuyenlink = new Intent(context, Service_Music.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object_music", music);
+                chuyenlink.putExtra("linknhac", listmusic.get(position).getLinknhac());
+                chuyenlink.putExtras(bundle);
+                context.startService(chuyenlink);
+
+
+
             }
         });
         holder.itemsong.setOnLongClickListener(new View.OnLongClickListener() {

@@ -1,56 +1,46 @@
 package quannkph29999.fpoly.assignment.Model;
 
 public class News {
-    private int idbao;
-    private String tenbao;
-    private String linkbao;
-    private String linkanh;
+    private String title;
+    private String description;
+    private String pubDate;
+    private String link;
 
-    public News(int idbao, String tenbao, String linkbao, String linkanh) {
-        this.idbao = idbao;
-        this.tenbao = tenbao;
-        this.linkbao = linkbao;
-        this.linkanh = linkanh;
+
+
+    public String getTitle() {
+        return title;
     }
 
-    public News() {
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public News(String tenbao, String linkbao, String linkanh) {
-        this.tenbao = tenbao;
-        this.linkbao = linkbao;
-        this.linkanh = linkanh;
+    public String getDescription() {
+        return description;
     }
 
-    public int getIdbao() {
-        return idbao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setIdbao(int idbao) {
-        this.idbao = idbao;
+    public String getPubDate() {
+        return pubDate;
     }
 
-    public String getTenbao() {
-        return tenbao;
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
 
-    public void setTenbao(String tenbao) {
-        this.tenbao = tenbao;
+    public String getLink() {
+        return link;
     }
 
-    public String getLinkbao() {
-        return linkbao;
+    public void setLink(String link) {
+        this.link = link;
     }
 
-    public void setLinkbao(String linkbao) {
-        this.linkbao = linkbao;
-    }
-
-    public String getLinkanh() {
-        return linkanh;
-    }
-
-    public void setLinkanh(String linkanh) {
-        this.linkanh = linkanh;
+    public String toString(){
+        return title + "\n" + pubDate;
     }
 }

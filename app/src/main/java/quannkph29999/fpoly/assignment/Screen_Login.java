@@ -2,9 +2,13 @@ package quannkph29999.fpoly.assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import quannkph29999.fpoly.assignment.DAO.ThanhVienDAO;
+import quannkph29999.fpoly.assignment.Service.Service_Login_Register;
 
 public class Screen_Login extends AppCompatActivity {
     EditText ed_TenDangNhap, ed_MkDangNhap;
@@ -22,6 +27,28 @@ public class Screen_Login extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     SharedPreferences.Editor editor;
+    Service_Login_Register service_loginRegister;
+    boolean checkconnected;
+    ServiceConnection sv_slogin = new ServiceConnection() {
+
+        @Override
+
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            Service_Login_Register.MyBinder myBinder = (Service_Login_Register.MyBinder) iBinder;
+            service_loginRegister = myBinder.getService_login();
+            checkconnected = true;
+
+
+        }
+
+        @Override
+
+        public void onServiceDisconnected(ComponentName componentName) {
+            checkconnected = false;
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +59,8 @@ public class Screen_Login extends AppCompatActivity {
         btn_DangNhap = findViewById(R.id.login_btnDangNhap);
         btn_DangKy = findViewById(R.id.login_btnDangKy);
         luutaikhoan = findViewById(R.id.login_cbluutaikhoan);
+        thanhVienDAO = new ThanhVienDAO(getApplicationContext());
+        service_loginRegister = new Service_Login_Register();
         initPreferences();
         SharedPreferences sharedPreferences1 = getSharedPreferences("DATALOGIN", MODE_PRIVATE);
         ed_TenDangNhap.setText(sharedPreferences1.getString("TENDN", ""));
@@ -45,9 +74,11 @@ public class Screen_Login extends AppCompatActivity {
         btn_DangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tendp = ed_TenDangNhap.getText().toString();
+                String tendn = ed_TenDangNhap.getText().toString();
                 String mk = ed_MkDangNhap.getText().toString();
-                thanhVienDAO = new ThanhVienDAO(getApplicationContext());
+                Intent intentlogin = new Intent(Screen_Login.this, MainActivity.class);
+                bindService(intentlogin, sv_slogin, Context.BIND_AUTO_CREATE);
+                startService(intentlogin);
                 if (ed_TenDangNhap.length() == 0) {
                     ed_TenDangNhap.requestFocus();
                     ed_TenDangNhap.setError("Không bỏ trống tên đăng nhập");
@@ -55,14 +86,13 @@ public class Screen_Login extends AppCompatActivity {
                     ed_MkDangNhap.requestFocus();
                     ed_MkDangNhap.setError("Không bỏ trống mật khẩu đăng nhập");
                 } else {
-                    if (thanhVienDAO.checkLogin(tendp, mk)) {
-                        rememberLogin(tendp,mk,luutaikhoan.isChecked());
-                        Intent dangnhap = new Intent(Screen_Login.this, MainActivity.class);
-                        startActivity(dangnhap);
+                    if (service_loginRegister.DangNhap(thanhVienDAO,tendn,mk) == true) {
+                        rememberLogin(tendn, mk, luutaikhoan.isChecked());
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thành Công", Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(Screen_Login.this, MainActivity.class);
+                        startActivity(intent);
                     } else {
-                        Toast.makeText(Screen_Login.this, "Đăng Nhập Thất Bại(Sai Mật Khẩu Hoặc Tên Đăng Nhập)", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Screen_Login.this, "Đăng Nhập Thất Bại", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -78,6 +108,8 @@ public class Screen_Login extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void initPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
