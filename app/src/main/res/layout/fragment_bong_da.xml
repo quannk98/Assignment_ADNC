@@ -7,8 +7,8 @@
     android:padding="10dp"
     tools:context=".ScreenNews.BongDaFragment">
 
-<ListView
-    android:id="@+id/BongDa_lview"
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/BongDa_recyc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 

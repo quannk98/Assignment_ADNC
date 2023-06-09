@@ -24,7 +24,7 @@
     <TextView
         android:id="@+id/a3"
         android:layout_toEndOf="@+id/a2"
-        android:text="Số Lượng Bài Hát:"
+
         android:layout_marginTop="60dp"
         android:textSize="20dp"
         android:layout_marginLeft="10dp"
@@ -35,7 +35,7 @@
         android:id="@+id/person_soluongbaihat"
         android:layout_toEndOf="@+id/a3"
         android:layout_marginTop="60dp"
-        android:text="3"
+
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_marginLeft="5dp"
@@ -44,7 +44,7 @@
     <TextView
         android:id="@+id/a4"
         android:layout_toEndOf="@+id/a2"
-        android:text="Số Lượng Bài Báo:"
+
         android:layout_marginTop="90dp"
         android:textSize="20dp"
         android:layout_marginLeft="10dp"
@@ -56,7 +56,7 @@
         android:layout_below="@+id/person_soluongbaihat"
         android:layout_toEndOf="@+id/a4"
         android:layout_marginTop="3dp"
-        android:text="3"
+
         android:textSize="20dp"
         android:textStyle="bold"
         android:layout_marginLeft="5dp"

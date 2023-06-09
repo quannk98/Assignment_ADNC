@@ -91,6 +91,7 @@ public class Screen_Login extends AppCompatActivity {
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thành Công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Screen_Login.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thất Bại", Toast.LENGTH_SHORT).show();
                     }

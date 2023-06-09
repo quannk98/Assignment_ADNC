@@ -43,4 +43,6 @@ public class News {
     public String toString(){
         return title + "\n" + pubDate;
     }
+
+
 }

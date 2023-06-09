@@ -2,12 +2,14 @@ package quannkph29999.fpoly.assignment.ScreenNews;
 
 import static android.R.layout.simple_list_item_1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -24,13 +26,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import quannkph29999.fpoly.assignment.Adapter.AdapterNews;
+import quannkph29999.fpoly.assignment.ContentNews;
 import quannkph29999.fpoly.assignment.Model.News;
 import quannkph29999.fpoly.assignment.R;
 import quannkph29999.fpoly.assignment.XML.ThoiSuXML;
 
 
 public class ThoiSuFragment extends Fragment {
-    ListView lView;
+    RecyclerView recyclerView;
+    News news;
+    AdapterNews adapterNews;
+
 
 
     public ThoiSuFragment() {
@@ -48,10 +55,12 @@ public class ThoiSuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thoi_su, container, false);
-        lView = view.findViewById(R.id.ThoiSu_lv);
+        recyclerView= view.findViewById(R.id.ThoiSu_reycc);
         String urlRss = "https://vnexpress.net/rss/thoi-su.rss";
         DownLoadThoiSu downLoadThoiSu = new DownLoadThoiSu();
         downLoadThoiSu.execute(urlRss);
+
+
         return view;
     }
 
@@ -62,6 +71,7 @@ public class ThoiSuFragment extends Fragment {
     }
 
     public class DownLoadThoiSu extends AsyncTask<String, Void, List<News>> {
+
 
         @Override
         protected List<News> doInBackground(String... strings) {
@@ -87,8 +97,10 @@ public class ThoiSuFragment extends Fragment {
         @Override
         protected void onPostExecute(List<News> thoisus) {
             super.onPostExecute(thoisus);
-            ArrayAdapter<News> adapter = new ArrayAdapter<>(getContext(), simple_list_item_1, thoisus);
-            lView.setAdapter(adapter);
+            adapterNews = new AdapterNews((ArrayList<News>) thoisus,getContext());
+            recyclerView.setAdapter(adapterNews);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         }
     }
 }
