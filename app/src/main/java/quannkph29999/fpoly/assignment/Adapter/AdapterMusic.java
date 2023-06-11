@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import quannkph29999.fpoly.assignment.DAO.FavDAO;
 import quannkph29999.fpoly.assignment.DAO.MusicDAO;
 import quannkph29999.fpoly.assignment.Fragment.Music_Fragment;
+import quannkph29999.fpoly.assignment.Fragment.Person_Fragment;
 import quannkph29999.fpoly.assignment.MainActivity;
 import quannkph29999.fpoly.assignment.Model.FavoriteMusic;
 import quannkph29999.fpoly.assignment.Model.Music;
@@ -50,8 +51,6 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
     FavDAO favDAO;
     boolean check = false;
     Music music;
-    boolean trangthai = true;
-
 
 
     public AdapterMusic(ArrayList<Music> listmusic, Context context, MusicDAO musicDAO, TextView title) {
@@ -95,12 +94,11 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
                 favDAO = new FavDAO(context);
                 FavoriteMusic themfav = new FavoriteMusic(tenfav);
                 if (check == false) {
-                    if (favDAO.ThemFav(themfav) > 0) {
+                    if (favDAO.ThemFav(themfav) >= 0) {
                         try {
-                            favoriteMusic.setTennhac(listmusic.get(position).getTennhac());
+                            favoriteMusic.setTennhac(tenfav);
                             holder.yeuthich.setImageResource(R.drawable.baseline_favorite_red_24);
                             Toast.makeText(context, "Đã Thêm Vào Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
-                            check = true;
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -123,13 +121,14 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
                 music = new Music();
                 String chuyenten = listmusic.get(position).getTennhac();
                 title.setText(chuyenten);
+
+
                 Intent chuyenlink = new Intent(context, Service_Music.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("object_music", music);
                 chuyenlink.putExtra("linknhac", listmusic.get(position).getLinknhac());
                 chuyenlink.putExtras(bundle);
                 context.startService(chuyenlink);
-
 
 
             }

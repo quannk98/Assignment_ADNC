@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +39,7 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tenbaibao;
+        TextView tenbaibao, content;
         ImageView img;
         RelativeLayout itembao;
 
@@ -45,6 +48,7 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
             tenbaibao = itemView.findViewById(R.id.news_title);
             img = itemView.findViewById(R.id.news_img);
             itembao = itemView.findViewById(R.id.news_relative);
+            content = itemView.findViewById(R.id.news_content);
 
         }
     }
@@ -60,7 +64,9 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.tenbaibao.setText(list.get(position).getTitle());
         String description = list.get(position).getDescription();
-
+        Document doc = Jsoup.parse(description);
+        String text = doc.text();
+        holder.content.setText(text);
 
         Pattern pattern = Pattern.compile("src=\\\"(.*?)\\\"");
         Matcher matcher = pattern.matcher(description);

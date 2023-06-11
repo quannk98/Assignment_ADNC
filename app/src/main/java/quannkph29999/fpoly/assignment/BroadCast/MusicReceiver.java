@@ -9,9 +9,9 @@ import quannkph29999.fpoly.assignment.Service.Service_Music;
 public class MusicReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-
-//       Intent intent1 = new Intent(context, Service_Music.class);
-//       intent1.putExtra("action_broadcast",0);
-//       context.startService(intent1);
+        int actonMusic =  intent.getIntExtra("action_music",0);
+       Intent intent1 = new Intent(context, Service_Music.class);
+       intent1.putExtra("action_broadcast",actonMusic);
+       context.startService(intent1);
     }
 }

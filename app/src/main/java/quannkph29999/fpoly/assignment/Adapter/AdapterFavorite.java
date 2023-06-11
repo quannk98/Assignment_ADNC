@@ -2,6 +2,7 @@ package quannkph29999.fpoly.assignment.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
         holder.tenfav.setText(listmfav.get(position).getTennhac());
         holder.xoafav.setOnClickListener(new View.OnClickListener() {
             @Override

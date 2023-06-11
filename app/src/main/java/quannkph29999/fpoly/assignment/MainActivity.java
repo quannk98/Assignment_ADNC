@@ -27,10 +27,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavi = findViewById(R.id.bottom_Navi);
         viewPager2 = findViewById(R.id.viewpager2);
+        Bundle check = getIntent().getExtras();
+        boolean checkdn = check.getBoolean("khach");
+        if(checkdn == true){
+            bottomNavi.getMenu().clear();
+            bottomNavi.inflateMenu(R.menu.menu_khach);
+        }
+        else if(checkdn == false) {
+            bottomNavi.getMenu().clear();
+            bottomNavi.inflateMenu(R.menu.menu_bottom_navi);
+        }
         setUpViewPager2();
         bottomNavi.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
                     case R.id.action_music:
 
@@ -43,9 +54,12 @@ public class MainActivity extends AppCompatActivity {
                         viewPager2.setCurrentItem(2);
                         break;
                 }
+
+
                 return true;
             }
         });
+
 
 
     }

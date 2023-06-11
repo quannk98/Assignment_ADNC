@@ -47,4 +47,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.picasso:picasso:(insert latest version)'
+    implementation 'org.jsoup:jsoup:1.10.3'
 }

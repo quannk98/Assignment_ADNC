@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context=".Fragment.Login_Fragment">
+
+    <ImageView
+        android:src="@drawable/avatar"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="130dp"
+        android:layout_height="130dp"/>
+    <Button
+        android:id="@+id/fglogin_btndangky"
+        android:layout_marginTop="20dp"
+        android:text="Đăng Ký"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+</LinearLayout>

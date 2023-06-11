@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class ThanhVienDAO {
                 ThanhVien thanhVien = new ThanhVien();
                 thanhVien.setTentv(cursor.getString(1));
                 thanhVien.setMatkhau(cursor.getString(2));
+                thanhVien.setImg(cursor.getString(3));
                 listthanhvien.add(thanhVien);
             } while (cursor.moveToNext());
         }
@@ -42,6 +44,15 @@ public class ThanhVienDAO {
 
         return sqLiteDatabase.insert("thanhvien", null, contentValues);
     }
+    public long ThemAnh(ThanhVien thanhVien) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("img", thanhVien.getImg());
+
+
+        return sqLiteDatabase.insert("thanhvien", null, contentValues);
+    }
+
     public boolean checkLogin(String tentv,String mk){
 
            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();

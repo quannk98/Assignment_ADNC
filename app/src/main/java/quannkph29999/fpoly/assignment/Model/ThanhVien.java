@@ -1,8 +1,11 @@
 package quannkph29999.fpoly.assignment.Model;
 
+import android.net.Uri;
+
 public class ThanhVien {
     private String tentv;
     private String matkhau;
+    private String img;
 
     public ThanhVien() {
     }
@@ -10,6 +13,16 @@ public class ThanhVien {
     public ThanhVien(String tentv, String matkhau) {
         this.tentv = tentv;
         this.matkhau = matkhau;
+    }
+
+    public ThanhVien(String tentv, String matkhau, Uri ìmg) {
+        this.tentv = tentv;
+        this.matkhau = matkhau;
+        this.img = img;
+    }
+
+    public ThanhVien(String img) {
+        this.img = img;
     }
 
     public String getTentv() {
@@ -26,5 +39,13 @@ public class ThanhVien {
 
     public void setMatkhau(String matkhau) {
         this.matkhau = matkhau;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

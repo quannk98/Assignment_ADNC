@@ -1,6 +1,11 @@
 package quannkph29999.fpoly.assignment.Service;
 
+import static quannkph29999.fpoly.assignment.Notification.MyApplication.CHANNEL_ID;
+
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -8,9 +13,11 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.IOException;
@@ -18,7 +25,10 @@ import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 
+import quannkph29999.fpoly.assignment.BroadCast.MusicReceiver;
+import quannkph29999.fpoly.assignment.Fragment.Music_Fragment;
 import quannkph29999.fpoly.assignment.Model.Music;
+import quannkph29999.fpoly.assignment.R;
 
 public class Service_Music extends Service {
     public static final int ACTION_START = 1;
@@ -45,8 +55,9 @@ public class Service_Music extends Service {
         if (bundle != null) {
             Music mmusic = (Music) bundle.get("object_music");
             if (mmusic != null) {
-                mmusic = music;
+                music = mmusic;
                 startMusic(musicURI);
+                sendNotification(music);
             }
 
         }
@@ -67,15 +78,6 @@ public class Service_Music extends Service {
             e.printStackTrace();
         }
 
-
-        //        if (mediaPlayer == null) {
-//            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(String.valueOf(musicURI)));
-//        }
-//        mediaPlayer.start();
-//        isPlaying = true;
-//        sendActivity(ACTION_START);
-
-
     }
 
     private void handleActionMusic(int action) {
@@ -91,12 +93,8 @@ public class Service_Music extends Service {
                 sendActivity(ACTION_STOP);
                 break;
             case ACTION_NEXT:
-                NextMusic();
-                sendActivity(ACTION_NEXT);
                 break;
             case ACTION_PREV:
-                PrevMusic();
-                sendActivity(ACTION_PREV);
                 break;
         }
     }
@@ -106,6 +104,7 @@ public class Service_Music extends Service {
         if (mediaPlayer != null && isPlaying == true) {
             mediaPlayer.pause();
             isPlaying = false;
+            sendNotification(music);
             sendActivity(ACTION_PAUSE);
         }
     }
@@ -114,18 +113,39 @@ public class Service_Music extends Service {
         if (mediaPlayer != null && isPlaying == false) {
             mediaPlayer.start();
             isPlaying = true;
+            sendNotification(music);
             sendActivity(ACTION_RESUME);
         }
     }
 
-    private void NextMusic() {
-        startMusic(music.getLinknhac());
 
+    private void sendNotification(Music music) {
+
+        Intent intent = new Intent(this, Music_Fragment.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custome_notification);
+        remoteViews.setTextViewText(R.id.cuno_title_song, music.getTennhac());
+        remoteViews.setImageViewResource(R.id.cuno_img_pause, R.drawable.baseline_pause_circle_24);
+        if (!isPlaying) {
+            remoteViews.setOnClickPendingIntent(R.id.cuno_img_pause, getPendingintent(this, ACTION_RESUME));
+            remoteViews.setImageViewResource(R.id.cuno_img_pause, R.drawable.baseline_play_circle_24);
+        } else {
+            remoteViews.setOnClickPendingIntent(R.id.cuno_img_pause, getPendingintent(this, ACTION_PAUSE));
+            remoteViews.setImageViewResource(R.id.cuno_img_pause, R.drawable.baseline_pause_circle_24);
+        }
+        remoteViews.setOnClickPendingIntent(R.id.cuno_img_clear, getPendingintent(this, ACTION_STOP));
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.baseline_music_note_24)
+                .setContentIntent(pendingIntent)
+                .setCustomContentView(remoteViews)
+                .build();
+        startForeground(1, notification);
     }
 
-    private void PrevMusic() {
-
-
+    private PendingIntent getPendingintent(Context context, int action) {
+        Intent intent = new Intent(this, MusicReceiver.class);
+        intent.putExtra("action_music", action);
+        return PendingIntent.getBroadcast(context.getApplicationContext(), action, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override

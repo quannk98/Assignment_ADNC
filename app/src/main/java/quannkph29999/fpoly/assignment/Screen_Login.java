@@ -14,9 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import quannkph29999.fpoly.assignment.DAO.ThanhVienDAO;
+import quannkph29999.fpoly.assignment.Fragment.Person_Fragment;
 import quannkph29999.fpoly.assignment.Service.Service_Login_Register;
 
 public class Screen_Login extends AppCompatActivity {
@@ -25,7 +27,7 @@ public class Screen_Login extends AppCompatActivity {
     CheckBox luutaikhoan;
     ThanhVienDAO thanhVienDAO;
     SharedPreferences sharedPreferences;
-
+    TextView tkkhach;
     SharedPreferences.Editor editor;
     Service_Login_Register service_loginRegister;
     boolean checkconnected;
@@ -59,6 +61,7 @@ public class Screen_Login extends AppCompatActivity {
         btn_DangNhap = findViewById(R.id.login_btnDangNhap);
         btn_DangKy = findViewById(R.id.login_btnDangKy);
         luutaikhoan = findViewById(R.id.login_cbluutaikhoan);
+        tkkhach = findViewById(R.id.login_khach);
         thanhVienDAO = new ThanhVienDAO(getApplicationContext());
         service_loginRegister = new Service_Login_Register();
         initPreferences();
@@ -71,6 +74,14 @@ public class Screen_Login extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        tkkhach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Screen_Login.this, MainActivity.class);
+                intent.putExtra("khach",true);
+                startActivity(intent);
+            }
+        });
         btn_DangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,10 +97,13 @@ public class Screen_Login extends AppCompatActivity {
                     ed_MkDangNhap.requestFocus();
                     ed_MkDangNhap.setError("Không bỏ trống mật khẩu đăng nhập");
                 } else {
-                    if (service_loginRegister.DangNhap(thanhVienDAO,tendn,mk) == true) {
+                    if (service_loginRegister.DangNhap(thanhVienDAO, tendn, mk) == true) {
                         rememberLogin(tendn, mk, luutaikhoan.isChecked());
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thành Công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Screen_Login.this, MainActivity.class);
+                        intent.putExtra("khach",false);
+                        Intent intent1 = new Intent(Screen_Login.this, Person_Fragment.class);
+                        intent.putExtra("tendn",tendn);
                         startActivity(intent);
                         finish();
                     } else {
@@ -109,7 +123,6 @@ public class Screen_Login extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void initPreferences() {
