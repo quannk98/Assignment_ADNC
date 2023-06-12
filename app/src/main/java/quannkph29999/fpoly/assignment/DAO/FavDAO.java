@@ -46,4 +46,13 @@ public class FavDAO {
 
         return sqLiteDatabase.delete("fav", "idfav = ?", new String[]{String.valueOf(idfav)});
     }
+    public boolean isFavorite(String tennhac) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        String query = "SELECT * FROM fav WHERE tennhac = ?";
+        String[] selectionArgs = { String.valueOf(tennhac) };
+        Cursor cursor = sqLiteDatabase.rawQuery(query, selectionArgs);
+        boolean isFavorite = cursor.getCount() > 0;
+        cursor.close();
+        return isFavorite;
+    }
 }

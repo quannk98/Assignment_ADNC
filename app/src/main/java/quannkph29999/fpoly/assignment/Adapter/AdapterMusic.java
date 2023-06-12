@@ -50,7 +50,7 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
     TextView title;
     FavDAO favDAO;
     boolean check = false;
-    Music music;
+    Music music = new Music();
 
 
     public AdapterMusic(ArrayList<Music> listmusic, Context context, MusicDAO musicDAO, TextView title) {
@@ -60,6 +60,7 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
         this.title = title;
 
     }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -95,33 +96,28 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
                 FavoriteMusic themfav = new FavoriteMusic(tenfav);
                 if (check == false) {
                     if (favDAO.ThemFav(themfav) >= 0) {
-                        try {
-                            favoriteMusic.setTennhac(tenfav);
-                            holder.yeuthich.setImageResource(R.drawable.baseline_favorite_red_24);
-                            Toast.makeText(context, "Đã Thêm Vào Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        favoriteMusic.setTennhac(listmusic.get(position).getTennhac());
+                        Toast.makeText(context, "Đã Thêm Vào Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
+                        holder.yeuthich.setImageResource(R.drawable.baseline_favorite_red_24);
                     } else {
-                        Toast.makeText(context, "Đã Tồn Tại Bài Hát Trong Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
+                        checkAndUpdateFavoriteStatus(holder,music);
+                        Toast.makeText(context, "Thêm Vào Danh Sách Yêu Thích Thất Bại", Toast.LENGTH_SHORT).show();
                     }
-
                 } else if (check == true) {
-                    holder.yeuthich.setImageResource(R.drawable.baseline_favorite_24);
-                    Toast.makeText(context, "Đã Xóa Khỏi Danh Sách Yêu Thích", Toast.LENGTH_SHORT).show();
+
                     check = false;
+
                 }
 
             }
         });
+
         holder.itemsong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 music = new Music();
                 String chuyenten = listmusic.get(position).getTennhac();
                 title.setText(chuyenten);
-
 
                 Intent chuyenlink = new Intent(context, Service_Music.class);
                 Bundle bundle = new Bundle();
@@ -241,6 +237,16 @@ public class AdapterMusic extends RecyclerView.Adapter<AdapterMusic.ViewHolder> 
             }
         });
 
+    }
+    private void checkAndUpdateFavoriteStatus(ViewHolder holder, Music music) {
+        FavDAO favoriteDAO = new FavDAO(context);
+
+        boolean isFavorite = favoriteDAO.isFavorite(music.getTennhac());
+        if (isFavorite) {
+            holder.yeuthich.setImageResource(R.drawable.baseline_favorite_red_24);
+        } else {
+            holder.yeuthich.setImageResource(R.drawable.baseline_favorite_24);
+        }
     }
 
 

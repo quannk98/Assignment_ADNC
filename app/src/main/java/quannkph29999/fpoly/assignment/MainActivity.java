@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.action_music:
-
                         viewPager2.setCurrentItem(0);
                         break;
                     case R.id.action_newspaper:

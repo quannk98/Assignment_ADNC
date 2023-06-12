@@ -3,6 +3,7 @@ package quannkph29999.fpoly.assignment.Model;
 import android.net.Uri;
 
 public class ThanhVien {
+    private int id;
     private String tentv;
     private String matkhau;
     private String img;
@@ -15,7 +16,7 @@ public class ThanhVien {
         this.matkhau = matkhau;
     }
 
-    public ThanhVien(String tentv, String matkhau, Uri ìmg) {
+    public ThanhVien(String tentv, String matkhau, String img) {
         this.tentv = tentv;
         this.matkhau = matkhau;
         this.img = img;
@@ -47,5 +48,13 @@ public class ThanhVien {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

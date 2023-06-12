@@ -102,9 +102,15 @@ public class Screen_Login extends AppCompatActivity {
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thành Công", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(Screen_Login.this, MainActivity.class);
                         intent.putExtra("khach",false);
-                        Intent intent1 = new Intent(Screen_Login.this, Person_Fragment.class);
-                        intent.putExtra("tendn",tendn);
                         startActivity(intent);
+
+                        Intent intent1 = new Intent(Screen_Login.this, Person_Fragment.class);
+                        Bundle bundle = new Bundle();
+                        intent1.putExtra("tendn",tendn);
+                        intent1.putExtra("mkdn",mk);
+                        intent1.putExtras(bundle);
+                        
+
                         finish();
                     } else {
                         Toast.makeText(Screen_Login.this, "Đăng Nhập Thất Bại", Toast.LENGTH_SHORT).show();

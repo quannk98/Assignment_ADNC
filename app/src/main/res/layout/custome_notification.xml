@@ -2,27 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_toStartOf="@+id/cuno_img_pause"
-        android:orientation="vertical">
-
         <TextView
             android:id="@+id/cuno_title_song"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/cuno_img_pause"
             android:paddingLeft="10dp"
             android:text="ten bai hat"
             android:textStyle="bold"
             android:textSize="25dp" />
 
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/cuno_img_clear"

@@ -32,6 +32,10 @@ public class AdapterFavorite extends RecyclerView.Adapter<AdapterFavorite.ViewHo
         this.listmfav = listmfav;
         this.favDAO = favDAO;
     }
+    public void setData(ArrayList<FavoriteMusic> listm){
+        this.listmfav = listm;
+        notifyDataSetChanged();
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tenfav;

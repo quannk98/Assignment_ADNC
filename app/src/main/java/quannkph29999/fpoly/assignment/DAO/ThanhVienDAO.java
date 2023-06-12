@@ -27,6 +27,7 @@ public class ThanhVienDAO {
             cursor.moveToFirst();
             do {
                 ThanhVien thanhVien = new ThanhVien();
+                thanhVien.setId(Integer.parseInt(cursor.getString(0)));
                 thanhVien.setTentv(cursor.getString(1));
                 thanhVien.setMatkhau(cursor.getString(2));
                 thanhVien.setImg(cursor.getString(3));
@@ -47,10 +48,11 @@ public class ThanhVienDAO {
     public long ThemAnh(ThanhVien thanhVien) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put("tentv", thanhVien.getTentv());
+        contentValues.put("matkhau", thanhVien.getMatkhau());
         contentValues.put("img", thanhVien.getImg());
 
-
-        return sqLiteDatabase.insert("thanhvien", null, contentValues);
+        return sqLiteDatabase.update("thanhvien",contentValues,"id = ?",new String[]{String.valueOf(thanhVien.getId())});
     }
 
     public boolean checkLogin(String tentv,String mk){

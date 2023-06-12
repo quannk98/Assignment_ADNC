@@ -52,6 +52,7 @@ public class Music_Fragment extends Fragment {
     private TextView timestart, totaltime;
     MediaPlayer mediaPlayer;
     private SeekBar seekBar;
+    int currentIndex;
     private Handler handler = new Handler();
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -99,7 +100,6 @@ public class Music_Fragment extends Fragment {
             public void onClick(View v) {
 
                 if (isplaying == true) {
-
                     sendService(Service_Music.ACTION_PAUSE);
                     btn_pause.setImageResource(R.drawable.baseline_play_circle_24);
                     Toast.makeText(getActivity(), "Tam Dung Bai Hat", Toast.LENGTH_SHORT).show();
@@ -217,6 +217,44 @@ public class Music_Fragment extends Fragment {
                 }
             }
         });
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentIndex++;
+                if (currentIndex >= listmusic.size()) {
+                    currentIndex = 0;
+                }
+                Music music = listmusic.get(currentIndex);
+                tenbaihat.setText(music.getTennhac());
+                Intent intent = new Intent(getContext(), Service_Music.class);
+                intent.putExtra("action_broadcast", Service_Music.ACTION_NEXT);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object_music", music);
+                intent.putExtra("linknhac", music.getLinknhac());
+                intent.putExtras(bundle);
+                getContext().startService(intent);
+
+
+            }
+        });
+        btn_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentIndex--;
+                if (currentIndex< 0){
+                    currentIndex = listmusic.size()-1;
+                }
+                Music music = listmusic.get(currentIndex);
+                tenbaihat.setText(music.getTennhac());
+                Intent intent = new Intent(getContext(), Service_Music.class);
+                intent.putExtra("action_broadcast", Service_Music.ACTION_NEXT);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("object_music", music);
+                intent.putExtra("linknhac", music.getLinknhac());
+                intent.putExtras(bundle);
+                getContext().startService(intent);
+            }
+        });
         btn_clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,17 +299,18 @@ public class Music_Fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         floatingthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ThemMusic();
             }
+
         });
         realoaddata();
-
     }
 
     @Override
@@ -303,8 +342,8 @@ public class Music_Fragment extends Fragment {
                     themlinknhac.requestFocus();
                     themlinknhac.setError("Không để trống phần link");
                 } else {
-
-                    if (musicDAO.ThemMusic(themmusic) > 0) {
+                    musicDAO = new MusicDAO(getContext());
+                    if (musicDAO.ThemMusic(themmusic) >= 0) {
                         realoaddata();
                         Toast.makeText(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show();
                         alertDialog.dismiss();

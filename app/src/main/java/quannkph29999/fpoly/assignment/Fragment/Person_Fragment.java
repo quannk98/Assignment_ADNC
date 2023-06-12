@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +56,6 @@ public class Person_Fragment extends Fragment {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     Button choose;
     TextView tendn;
-    ThanhVien thanhVien;
     ThanhVienDAO thanhVienDAO;
 
     public Person_Fragment() {
@@ -85,10 +87,17 @@ public class Person_Fragment extends Fragment {
         favDAO = new FavDAO(getContext());
         listfav = favDAO.getDSFM();
         adapterFavorite = new AdapterFavorite(getContext(), listfav, favDAO);
+        adapterFavorite.setData(listfav);
         recyclerView.setAdapter(adapterFavorite);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        realoandata();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,7 +111,7 @@ public class Person_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), Screen_Login.class);
                 getContext().startActivity(intent);
-                getActivity().finish();
+
 
             }
         });
@@ -115,7 +124,7 @@ public class Person_Fragment extends Fragment {
                     try {
                         photoFile = createImageFile();
                     } catch (IOException ex) {
-
+                        ex.printStackTrace();
                     }
                     if (photoFile != null) {
                         Uri photoURI = FileProvider.getUriForFile(getContext(),
@@ -132,7 +141,7 @@ public class Person_Fragment extends Fragment {
             }
         });
 
-
+        realoandata();
     }
 
     @Override
@@ -146,24 +155,23 @@ public class Person_Fragment extends Fragment {
                         "quannkph29999.fpoly.assignment.Fragment.fileprovider",
                         photoFile);
                 thanhVienDAO = new ThanhVienDAO(getContext());
-                String img = String.valueOf(photoURI);
-                if(photoURI != null){
-                    Toast.makeText(getContext(), "ok", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(), "khong ok", Toast.LENGTH_SHORT).show();
-                }
-                ThanhVien imgthem = new ThanhVien(img);
+                String tendn = data.getStringExtra("tendn");
+                String mkdn = data.getStringExtra("mkdn");
+                String imganh = photoFile.getAbsolutePath();
+                ThanhVien imgthem = new ThanhVien(tendn,mkdn,imganh);
                 if (thanhVienDAO.ThemAnh(imgthem) >= 0) {
-                    Toast.makeText(getContext(), "Chọn Ảnh Thành Công", Toast.LENGTH_SHORT).show();
+                    realoandata();
+                    Toast.makeText(getContext(), "Cập Nhật Ảnh Thành Công", Toast.LENGTH_SHORT).show();
+                    setPic();
                 } else {
-                    Toast.makeText(getContext(), "Chọn Ảnh Thất Bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Cập Nhật Ảnh Thất Bại", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-        setPic();
+
 
     }
+
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -174,7 +182,6 @@ public class Person_Fragment extends Fragment {
                 ".jpg",
                 storageDir
         );
-
 
         currentPhotoPath = image.getAbsolutePath();
         return image;
@@ -204,6 +211,7 @@ public class Person_Fragment extends Fragment {
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         imageView.setImageBitmap(bitmap);
         imageView.setRotation(0);
+
     }
 
 

@@ -73,9 +73,9 @@ public class AdapterNews extends RecyclerView.Adapter<AdapterNews.ViewHolder> {
         String url_image = "";
         if (matcher.find()) {
             url_image = matcher.group(1);
+            Picasso.get().load(url_image).into(holder.img);
 
         }
-        Picasso.get().load(url_image).into(holder.img);
 
         holder.itembao.setOnClickListener(new View.OnClickListener() {
             @Override

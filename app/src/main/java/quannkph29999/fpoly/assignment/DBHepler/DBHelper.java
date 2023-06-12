@@ -17,11 +17,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "linknhac text UNIQUE NOT NULL)";
         db.execSQL(bangnhac);
 
-        String bangthanhvien = "CREATE TABLE thanhvien(tentv text primary key," +
-                "matkhau NOT NULL,img text )";
+        String bangthanhvien = "CREATE TABLE thanhvien(id integer primary key autoincrement,tentv text ," +
+                "matkhau ,img text )";
         db.execSQL(bangthanhvien);
-        String themtv = "INSERT INTO thanhvien VALUES('quannk98','1234','img1')";
-        db.execSQL(themtv);
+
+
         String bangfavmusic = "CREATE TABLE fav(idfav integer primary key autoincrement,tennhac text UNIQUE REFERENCES nhac(tennhac) )";
         db.execSQL(bangfavmusic);
 

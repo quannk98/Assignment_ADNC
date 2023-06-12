@@ -14,9 +14,6 @@ import quannkph29999.fpoly.assignment.Fragment.News_Fragment;
 import quannkph29999.fpoly.assignment.Fragment.Person_Fragment;
 
 public class ViewPager2Adapter extends FragmentStateAdapter {
-    private Music_Fragment musicFragment;
-    private News_Fragment newsFragment;
-    private Person_Fragment personFragment;
 
 
     public ViewPager2Adapter(@NonNull FragmentActivity fragmentActivity) {
@@ -28,25 +25,15 @@ public class ViewPager2Adapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                if (musicFragment == null) {
-                    musicFragment = new Music_Fragment();
-                }
-                return musicFragment;
+
+                return new Music_Fragment();
             case 1:
-                if (newsFragment == null) {
-                    newsFragment = new News_Fragment();
-                }
-                return newsFragment;
+                return new News_Fragment();
             case 2:
-                if (personFragment == null) {
-                    personFragment = new Person_Fragment();
-                }
-                return personFragment;
+
+                return new Person_Fragment();
             default:
-                if (musicFragment == null) {
-                    musicFragment = new Music_Fragment();
-                }
-                return musicFragment;
+                return new Music_Fragment();
 
         }
 

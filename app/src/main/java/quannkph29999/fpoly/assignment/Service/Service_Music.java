@@ -40,12 +40,16 @@ public class Service_Music extends Service {
     private MediaPlayer mediaPlayer;
     private boolean isPlaying;
     private Music music;
+    private ArrayList<Music> listmusic;
+    int currentMusicIndex = 0;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         mediaPlayer = new MediaPlayer();
+        listmusic = new ArrayList<>();
+
     }
 
     @Override
@@ -93,8 +97,12 @@ public class Service_Music extends Service {
                 sendActivity(ACTION_STOP);
                 break;
             case ACTION_NEXT:
+                nextMusic();
+                sendActivity(ACTION_START);
                 break;
             case ACTION_PREV:
+                previousMusic();
+                sendActivity(ACTION_START);
                 break;
         }
     }
@@ -116,6 +124,36 @@ public class Service_Music extends Service {
             sendNotification(music);
             sendActivity(ACTION_RESUME);
         }
+    }
+
+    private void nextMusic() {
+        if (listmusic.size() == 0) {
+            return;
+        }
+
+        currentMusicIndex++;
+        if (currentMusicIndex >= listmusic.size()) {
+            currentMusicIndex = 0;
+        }
+        Music nextMusic = listmusic.get(currentMusicIndex);
+        String musicURI = nextMusic.getLinknhac();
+        startMusic(musicURI);
+        sendNotification(nextMusic);
+    }
+
+    private void previousMusic() {
+        if (listmusic.isEmpty()) {
+            return;
+        }
+
+        currentMusicIndex--;
+        if (currentMusicIndex < 0) {
+            currentMusicIndex = listmusic.size() - 1;
+        }
+        Music prevMusic = listmusic.get(currentMusicIndex);
+        String musicURI = prevMusic.getLinknhac();
+        startMusic(musicURI);
+        sendNotification(prevMusic);
     }
 
 
